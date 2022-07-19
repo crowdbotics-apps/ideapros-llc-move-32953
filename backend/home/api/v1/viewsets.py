@@ -2,11 +2,40 @@ from rest_framework.authtoken.serializers import AuthTokenSerializer
 from rest_framework.viewsets import ModelViewSet, ViewSet
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
+from rest_framework import status
+from rest_framework.views import APIView
 
 from home.api.v1.serializers import (
     SignupSerializer,
     UserSerializer,
+    UserProfileSerializer,
+    UserProfileCreateSerializer,
 )
+from users.models import Profile
+
+
+class UserProfileAPIView(APIView):
+    def get(self, request):
+        try:
+            profile = Profile.objects.get(user=request.user)
+            profile_serializer = UserProfileSerializer(profile)
+            return Response(data=profile_serializer.data)
+        except Exception as e:
+            print(e)
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+class UserProfileViewSet(ModelViewSet):
+    serializer_class = UserProfileSerializer
+    queryset = Profile.objects.all()
+    lookup_field = "user__id"
+    filterset_fields = ("user__id",)
+
+    def get_serializer_class(self):
+        if self.request.method in ("POST"):
+            return UserProfileCreateSerializer
+        else:
+            return UserProfileSerializer
 
 
 class SignupViewSet(ModelViewSet):

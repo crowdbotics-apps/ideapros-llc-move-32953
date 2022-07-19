@@ -58,10 +58,10 @@ schema_view = get_schema_view(
 )
 
 urlpatterns += [
-    path("api-docs/", schema_view.with_ui("swagger", cache_timeout=0), name="api_docs"),
+    # path("api-docs/", schema_view.with_ui("swagger", cache_timeout=0), name="api_docs"),
     path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
     path(
-        "api/schema/docs/",
+        "api-docs/",
         SpectacularSwaggerView.as_view(url_name="schema"),
         name="swagger-ui",
     ),
