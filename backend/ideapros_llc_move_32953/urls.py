@@ -21,6 +21,11 @@ from allauth.account.views import confirm_email
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
+from drf_spectacular.views import (
+    SpectacularAPIView,
+    SpectacularRedocView,
+    SpectacularSwaggerView,
+)
 
 urlpatterns = [
     path("", include("home.urls")),
@@ -53,10 +58,22 @@ schema_view = get_schema_view(
 )
 
 urlpatterns += [
-    path("api-docs/", schema_view.with_ui("swagger", cache_timeout=0), name="api_docs")
+    path("api-docs/", schema_view.with_ui("swagger", cache_timeout=0), name="api_docs"),
+    path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
+    path(
+        "api/schema/docs/",
+        SpectacularSwaggerView.as_view(url_name="schema"),
+        name="swagger-ui",
+    ),
+    path(
+        "api/schema/redoc/",
+        SpectacularRedocView.as_view(url_name="schema"),
+        name="redoc",
+    ),
 ]
 
 
-urlpatterns += [path("", TemplateView.as_view(template_name='index.html'))]
-urlpatterns += [re_path(r"^(?:.*)/?$",
-                TemplateView.as_view(template_name='index.html'))]
+urlpatterns += [path("", TemplateView.as_view(template_name="index.html"))]
+urlpatterns += [
+    re_path(r"^(?:.*)/?$", TemplateView.as_view(template_name="index.html"))
+]
