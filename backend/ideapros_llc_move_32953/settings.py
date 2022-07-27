@@ -83,6 +83,7 @@ THIRD_PARTY_APPS = [
     "django_extensions",
     "drf_yasg",
     "storages",
+    "corsheaders",
     "django_filters",
     "drf_spectacular",
 ]
@@ -93,6 +94,7 @@ INSTALLED_APPS += LOCAL_APPS + THIRD_PARTY_APPS + MODULES_APPS
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -272,6 +274,8 @@ SPECTACULAR_SETTINGS = {
     "SERVE_PERMISSIONS": ["rest_framework.permissions.IsAuthenticated"],
 }
 
+CORS_ALLOW_ALL_ORIGINS = True
+
 REST_FRAMEWORK = {
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
     "DEFAULT_FILTER_BACKENDS": (
@@ -289,3 +293,5 @@ REST_FRAMEWORK = {
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
     "PAGE_SIZE": 25,
 }
+
+DEFAULT_FROM_EMAIL = env.str("DEFAULT_FROM_EMAIL", "")
