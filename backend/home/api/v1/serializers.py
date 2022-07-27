@@ -99,6 +99,8 @@ class UserProfileCreateSerializer(WritableNestedModelSerializer):
             "social_security_number",
             "citizenship",
             "bio",
+            "zip_code",
+            "country",
         ]
 
 
@@ -123,6 +125,8 @@ class UserProfileSerializer(serializers.ModelSerializer):
             "social_security_number",
             "citizenship",
             "bio",
+            "zip_code",
+            "country",
         ]
 
     def create(self, validated_data):

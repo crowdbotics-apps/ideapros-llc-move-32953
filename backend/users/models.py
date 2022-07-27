@@ -48,6 +48,8 @@ class Profile(BaseModel):
     )
     city = models.CharField(max_length=255, blank=True, null=True)
     state = models.CharField(max_length=255, blank=True, null=True)
+    zip_code = models.CharField(max_length=255, blank=True, null=True)
+    country = models.CharField(max_length=255, blank=True, null=True)
     street_name = models.CharField(max_length=255, blank=True, null=True)
     house_number = models.CharField(max_length=255, blank=True, null=True)
     citizenship = models.CharField(
