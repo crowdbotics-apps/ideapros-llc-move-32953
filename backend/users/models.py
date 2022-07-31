@@ -75,6 +75,16 @@ class Profile(BaseModel):
         blank=True,
         null=True,
     )
+    business_name = models.CharField(
+        max_length=255,
+        blank=True,
+        null=True,
+    )
+    business_category = models.CharField(
+        max_length=255,
+        blank=True,
+        null=True,
+    )
 
     class Meta:
         verbose_name = "Profile"
